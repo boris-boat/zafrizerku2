@@ -1,7 +1,7 @@
 import React from "react";
 import Item from "./components/Item";
 import "./App.css";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
@@ -21,6 +21,8 @@ function App() {
   const [datumPretraga, setDatumPretraga] = useState(new Date());
   const [vreme, setVreme] = useState("");
   const [detalji, setDetalji] = useState("");
+  const [potvrda, setPotvrda] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
 
   const getTermine = async () => {
     fetch(REACT_APP_API_URL + "/termini")
@@ -41,6 +43,7 @@ function App() {
       }),
     })
       .then((res) => res.json())
+      .then()
       .catch((e) => {
         console.log(e);
       });
@@ -48,14 +51,12 @@ function App() {
     setTermini([...termini, latestTermin]);
   };
   const deleteTermin = async (id) => {
-    console.log("iz deletea");
-    await fetch("http://localhost:3001/deleteTermin/" + id, {
+    await fetch(REACT_APP_API_URL + "/deleteTermin/" + id, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .catch((e) => console.log(e));
 
-    //findbyid and assign to value then filter by it
     const terminiCopy = termini;
 
     setTermini(terminiCopy.filter((termin) => termin._id !== id));
@@ -74,6 +75,7 @@ function App() {
         onChange={(date) => {
           setDatumPretraga(date);
         }}
+        dateFormat="d MMMM, yyyy "
       />
       <div className="mt-3">
         <h2>Unos novog zakazivanja :</h2>
@@ -86,24 +88,54 @@ function App() {
                 onChange={(date) => {
                   setDatum(date);
                 }}
+                dateFormat="d MMMM, yyyy "
               />
               Vreme :
               <Form.Control
                 type="text"
                 placeholder="Vreme"
                 onChange={(e) => setVreme(e.target.value)}
+                value={vreme}
               />
               Detalji :
               <Form.Control
                 type="text"
                 placeholder="Detalji"
                 onChange={(e) => setDetalji(e.target.value)}
+                value={detalji}
               />
             </Form.Group>
-            <Button variant="primary" onClick={(e) => addTermin()}>
+            <Button
+              variant="primary"
+              onClick={() => {
+                if (vreme !== "" && detalji !== "") {
+                  addTermin();
+                  setPotvrda(
+                    `Uspesno dodat termin datuma ${datum.toLocaleDateString()}`
+                  );
+                  setShowAlert(true);
+                  setTimeout(() => {
+                    setShowAlert(false);
+                  }, 4000);
+                  setDetalji("");
+                  setVreme("");
+                } else {
+                  setPotvrda("Niste upisali sva polja !");
+                  setShowAlert(true);
+                  setTimeout(() => {
+                    setShowAlert(false);
+                  }, 3000);
+                }
+              }}
+            >
               Dodaj
             </Button>
           </Form>
+          {potvrda && showAlert === true ? (
+            <Alert style={{ width: "400px" }}>{potvrda}</Alert>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="mt-5">

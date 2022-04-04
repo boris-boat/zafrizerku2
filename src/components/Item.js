@@ -6,15 +6,6 @@ const Item = (props) => {
   useEffect(() => {
     setTermin(props.termin);
   }, []);
-  let dani = [
-    "Nedelja",
-    "Ponedeljak",
-    "Utorak",
-    "Sreda",
-    "Četvrtak",
-    "Petak",
-    "Subota",
-  ];
 
   return (
     <div style={{ width: "400px" }}>
