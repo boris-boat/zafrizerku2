@@ -23,7 +23,7 @@ function App() {
   const [detalji, setDetalji] = useState("");
   const [potvrda, setPotvrda] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-
+  //da se izbrisu stari termini kad prodje datum
   const getTermine = async () => {
     fetch(REACT_APP_API_URL + "/termini")
       .then((res) => res.json())
@@ -139,7 +139,6 @@ function App() {
         </div>
       </div>
       <div className="mt-5">
-        {/* napraviti da filtrira i kad se bira datum */}
         {termini
           ? termini
 
@@ -152,6 +151,9 @@ function App() {
                 ) {
                   return val;
                 }
+              })
+              .sort((a, b) => {
+                return a.vreme - b.vreme;
               })
               .map((termin) => {
                 return (
