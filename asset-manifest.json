@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/zafrizerku2/static/css/main.184419a9.css",
-    "main.js": "/zafrizerku2/static/js/main.0f2176a1.js",
+    "main.js": "/zafrizerku2/static/js/main.bed318c8.js",
     "index.html": "/zafrizerku2/index.html",
     "main.184419a9.css.map": "/zafrizerku2/static/css/main.184419a9.css.map",
-    "main.0f2176a1.js.map": "/zafrizerku2/static/js/main.0f2176a1.js.map"
+    "main.bed318c8.js.map": "/zafrizerku2/static/js/main.bed318c8.js.map"
   },
   "entrypoints": [
     "static/css/main.184419a9.css",
-    "static/js/main.0f2176a1.js"
+    "static/js/main.bed318c8.js"
   ]
 }
